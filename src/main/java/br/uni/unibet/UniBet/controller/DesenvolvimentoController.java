@@ -1,4 +1,4 @@
-package br.uni.apostasuni.UniBet.controller;
+package br.uni.unibet.UniBet.controller;
 
 import org.springframework.web.bind.annotation.*;
 
@@ -7,8 +7,8 @@ import java.util.ArrayList;
 @RestController
 @RequestMapping("/desenv")
 public class DesenvolvimentoController {
-    static ArrayList<String> desenvolvedores;
 
+    static ArrayList<String> desenvolvedores;
     static {
         desenvolvedores = new ArrayList<>();
         desenvolvedores.add("Zezin da Silva");
@@ -17,20 +17,19 @@ public class DesenvolvimentoController {
     }
 
     @GetMapping("/time")
-    public String getDesenvTime() {
+    public String getDesenvTime(){
         String nome = "";
-        for (String n : desenvolvedores) {
-            nome += n + ";";
+        for (String n: desenvolvedores) {
+            nome += n+"; ";
         }
         return nome;
-
     }
 
     @GetMapping("/time/{posicao}")
-    public String getDesenvTimeOne(@PathVariable int posicao) {
-        if (posicao >= 1 && posicao <= desenvolvedores.size()) {
+    public String getDesenvTimeOne(@PathVariable int posicao){
+        if (posicao >=1 && posicao <= desenvolvedores.size()) {
             return desenvolvedores.get(posicao - 1);
-        } else {
+        }else{
             return "indice incorreto";
         }
     }
@@ -40,38 +39,35 @@ public class DesenvolvimentoController {
                                                 @RequestHeader(required = true) String token){
 
         ArrayList<String> busca = new ArrayList<>();
-        if (token.equals("123")) {
-            for (String str : desenvolvedores) {
-                if (str.contains(nome)) {
+        if ( token.equals("123")){
+            for (String str: desenvolvedores ) {
+                if (str.contains(nome)){
                     busca.add(str);
                 }
             }
-            return busca;
+            return busca;            
         }else{
-            busca.add("token incorreto");
+            busca.add("Token incorreto!!!");
             return busca;
         }
     }
 
     @PostMapping("/time")
-    public String saveDesenvolvedores(@RequestBody String nome) {
-        if (!nome.isBlank() && !nome.isEmpty()) {
-            desenvolvedores.add(nome);
-            return "salvo com sucesso";
-        }
-        return "Erro ao salvar";
-
+    public String saveDesenvolvedores( @RequestBody String nome){
+            if (nome != null && !nome.isBlank() && !nome.isEmpty()){
+                desenvolvedores.add( nome );
+                return "Salvo com sucesso";
+            }
+            return "Erro ao Salvar";
     }
 
     @DeleteMapping("/time/{idx}")
-    public String deleteDesenvolvedores(@PathVariable int idx) {
-
-        if (idx >= 1 && idx <= desenvolvedores.size()) {
-            desenvolvedores.remove(idx);
+    public String deleteDeenvolvedor( @PathVariable int idx ){
+        if (idx >= 1 && idx <= desenvolvedores.size()){
+            desenvolvedores.remove(idx -1);
             return "desenvolvedor apagado com sucesso";
         }
-        return "Erro ao apagar";
-
+        return "Erro ao Apagar";
     }
 
     @PutMapping("/time/{idx}")
@@ -83,4 +79,5 @@ public class DesenvolvimentoController {
         }
         return "Erro ao Alterar";
     }
+
 }
