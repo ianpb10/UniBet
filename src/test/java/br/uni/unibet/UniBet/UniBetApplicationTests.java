@@ -1,4 +1,4 @@
-package br.uni.apostasuni.UniBet;
+package br.uni.unibet.UniBet;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
